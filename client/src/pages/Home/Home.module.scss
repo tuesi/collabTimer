@@ -1,0 +1,97 @@
+$bg-color: #111;
+$ring-color: #ffffff;
+$text-color: #ffffff;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  height: 100vh;
+  background-color: $bg-color;
+}
+
+.createButton {
+  background: transparent;
+  border: 2px solid $ring-color;
+  color: $text-color;
+  font-size: 1rem;
+  font-family: monospace;
+  letter-spacing: 0.08em;
+  padding: 0.75rem 2.5rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  width: 220px;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: monospace;
+  font-size: 0.85rem;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.joinSection {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.codeInput {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: $text-color;
+  font-size: 1rem;
+  font-family: monospace;
+  letter-spacing: 0.08em;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+  width: 150px;
+  outline: none;
+  transition: border-color 0.2s ease;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  &:focus {
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.joinButton {
+  background: transparent;
+  border: 2px solid $ring-color;
+  color: $text-color;
+  font-size: 1rem;
+  font-family: monospace;
+  letter-spacing: 0.08em;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}
