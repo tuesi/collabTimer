@@ -63,11 +63,17 @@ function registerRoomHandlers(io: Server, socket: Socket) {
     if (settings) socket.emit('room_settings', settings)
     const isHost = roomHosts.get(room) === socket.id
     socket.emit('room_role', { isHost })
+    const joinedSize = io.sockets.adapter.rooms.get(room)?.size ?? 1
+    io.to(room).emit('user_count', joinedSize)
+    if (joinedSize > 1) socket.to(room).emit('user_joined')
     console.log(`[socket] ${socket.id} joined room: ${room} (host: ${isHost})`)
   })
 
   socket.on('leave', (room: string) => {
     socket.leave(room)
+    const leftSize = io.sockets.adapter.rooms.get(room)?.size ?? 0
+    io.to(room).emit('user_count', leftSize)
+    if (leftSize > 0) socket.to(room).emit('user_left')
     console.log(`[socket] ${socket.id} left room: ${room}`)
   })
 
@@ -137,6 +143,8 @@ function registerRoomHandlers(io: Server, socket: Socket) {
     const settings = roomSettings.get(code)
     if (settings) socket.emit('room_settings', settings)
     socket.emit('room_role', { isHost: true })
+    const claimSize = io.sockets.adapter.rooms.get(code)?.size ?? 1
+    io.to(code).emit('user_count', claimSize)
     console.log(`[socket] ${socket.id} reclaimed host for room: ${code}`)
   })
 
@@ -147,6 +155,9 @@ function registerRoomHandlers(io: Server, socket: Socket) {
       if (room === socket.id || !activeCodes.has(room)) continue
       const roomSize = io.sockets.adapter.rooms.get(room)?.size ?? 0
       if (roomSize <= 1) scheduleRoomCleanup(io, room)  // <=1: this socket still counted
+      const remaining = Math.max(0, roomSize - 1)
+      socket.to(room).emit('user_count', remaining)
+      if (remaining > 0) socket.to(room).emit('user_left')
     }
     const code = socketToCode.get(socket.id)
     if (code) {

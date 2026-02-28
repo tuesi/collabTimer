@@ -1,7 +1,7 @@
 $bg-color: #111;
 $ring-color: #ffffff;
 $text-color: #ffffff;
-$font-size: 2.8rem;
+$font-size: 2.2rem;
 $ring-stroke: 8px;
 $transition-speed: 0.5s;
 
@@ -31,13 +31,17 @@ $transition-speed: 0.5s;
   fill: transparent;
   stroke-width: $ring-stroke;
   stroke-linecap: round;
+  shape-rendering: geometricPrecision;
 }
 
-.timeDisplay {
+.timeDisplayWrapper {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.timeDisplay {
   display: flex;
   align-items: center;
   color: $text-color;
@@ -46,6 +50,15 @@ $transition-speed: 0.5s;
   font-weight: 300;
   letter-spacing: 0.05em;
   white-space: nowrap;
+}
+
+.editHint {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  font-size: 0.75rem;
+  color: $text-color;
+  pointer-events: none;
 }
 
 .timePart {
@@ -70,6 +83,10 @@ $transition-speed: 0.5s;
   width: 100%;
   padding: 0;
   outline: none;
+}
+
+.playIcon {
+  transform: translateX(1px);
 }
 
 .startButton {
@@ -204,11 +221,11 @@ $transition-speed: 0.5s;
     height: 0;
     position: absolute;
 
-    &:checked + .toggleSlider {
+    &:checked+.toggleSlider {
       background: $ring-color;
     }
 
-    &:checked + .toggleSlider::before {
+    &:checked+.toggleSlider::before {
       transform: translateX(1.1rem);
       background: $bg-color;
     }
@@ -232,6 +249,46 @@ $transition-speed: 0.5s;
     background: $text-color;
     border-radius: 50%;
     transition: transform 0.2s;
+  }
+}
+
+.userCount {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  color: $text-color;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.joinAlert {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: $text-color;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  backdrop-filter: blur(4px);
+  animation: fadeInDown 0.2s ease;
+  z-index: 200;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 }
 
