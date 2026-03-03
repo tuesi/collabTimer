@@ -108,6 +108,8 @@ export function useTimerRoom(code: string | undefined) {
 
   function setDuration(seconds: number) {
     socket.emit('timer_set_duration', code, seconds)
+    setTimeLeft(seconds)
+    setTotalSeconds(seconds)
   }
 
   function setOpenControlsEnabled(value: boolean) {
