@@ -15,6 +15,8 @@
 ║                      ██║   ██║██║ ╚═╝ ██║███████╗██║  ██║    ║
 ║                      ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝    ║
 ║                                                              ║
-║          [collabtimer.com](https://collabtimer.com)          ║
+║                       collabtimer.com                        ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
+
+### 🔗 [collabtimer.com](https://collabtimer.com)
