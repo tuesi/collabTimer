@@ -46,9 +46,10 @@ $transition-speed: 0.5s;
   align-items: center;
   color: $text-color;
   font-size: $font-size;
-  font-family: monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 300;
   letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
@@ -76,9 +77,10 @@ $transition-speed: 0.5s;
   border: none;
   color: $text-color;
   font-size: $font-size;
-  font-family: monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 300;
   letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
   text-align: center;
   width: 100%;
   padding: 0;

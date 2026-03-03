@@ -29,6 +29,10 @@ export default function Home() {
 
   return (
     <div className={styles.wrapper}>
+      <div className={styles.hero}>
+        <h1 className={styles.title}>Collab Timer</h1>
+        <p className={styles.subtitle}>A timer you can share</p>
+      </div>
       <button className={styles.createButton} onClick={handleCreate}>
         Create Timer
       </button>
