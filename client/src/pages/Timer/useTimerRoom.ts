@@ -31,7 +31,8 @@ export function useTimerRoom(code: string | undefined) {
       const s = serverTimerRef.current
       if (s?.state === 'running' && s.startedAt !== null) {
         const ms = s.duration * 1000 - (s.elapsed + (Date.now() - s.startedAt))
-        setTimeLeft(Math.max(0, Math.ceil(ms / 1000)))
+        const max = Math.ceil((s.duration * 1000 - s.elapsed) / 1000)
+        setTimeLeft(Math.max(0, Math.min(max, Math.ceil(ms / 1000))))
       }
     }, 100)
     return () => clearInterval(interval)
@@ -47,7 +48,8 @@ export function useTimerRoom(code: string | undefined) {
       const ms = state.state === 'running' && state.startedAt !== null
         ? state.duration * 1000 - (state.elapsed + (Date.now() - state.startedAt))
         : state.duration * 1000 - state.elapsed
-      setTimeLeft(Math.max(0, Math.ceil(ms / 1000)))
+      const max = Math.ceil((state.duration * 1000 - state.elapsed) / 1000)
+      setTimeLeft(Math.max(0, Math.min(max, Math.ceil(ms / 1000))))
     }
 
     function applyRole({ isHost }: { isHost: boolean }) {
