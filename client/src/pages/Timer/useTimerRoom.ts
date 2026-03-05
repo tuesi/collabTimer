@@ -41,12 +41,18 @@ export function useTimerRoom(code: string | undefined) {
   // Sync state from server
   useEffect(() => {
     function applyServerState(state: ServerTimerState) {
-      serverTimerRef.current = state
+      const prev = serverTimerRef.current
+      // Preserve optimistic startedAt when the host already started running locally —
+      // otherwise the server's clock timestamp overwrites ours and the host appears behind.
+      const startedAt = prev?.state === 'running' && state.state === 'running'
+        ? prev.startedAt
+        : state.startedAt
+      serverTimerRef.current = { ...state, startedAt }
       setTotalSeconds(state.duration)
       setIsRunning(state.state === 'running')
       setIsPaused(state.state === 'paused')
-      const ms = state.state === 'running' && state.startedAt !== null
-        ? state.duration * 1000 - (state.elapsed + (Date.now() - state.startedAt))
+      const ms = state.state === 'running' && startedAt !== null
+        ? state.duration * 1000 - (state.elapsed + (Date.now() - startedAt))
         : state.duration * 1000 - state.elapsed
       const max = Math.ceil((state.duration * 1000 - state.elapsed) / 1000)
       setTimeLeft(Math.max(0, Math.min(max, Math.ceil(ms / 1000))))
