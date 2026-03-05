@@ -101,7 +101,17 @@ export function useTimerRoom(code: string | undefined) {
   }, [code, socket, navigate])
 
   function toggleTimer() {
-    socket.emit(isRunning ? 'timer_pause' : 'timer_start', code)
+    if (isRunning) {
+      socket.emit('timer_pause', code)
+    } else {
+      // Optimistic update: host starts immediately without waiting for socket round-trip
+      if (isHost && serverTimerRef.current) {
+        serverTimerRef.current = { ...serverTimerRef.current, state: 'running', startedAt: Date.now() }
+        setIsRunning(true)
+        setIsPaused(false)
+      }
+      socket.emit('timer_start', code)
+    }
   }
 
   function handleReset() {

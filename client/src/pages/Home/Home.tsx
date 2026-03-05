@@ -45,7 +45,7 @@ export default function Home() {
           type="text"
           placeholder="Enter code"
           value={code}
-          onChange={e => setCode(e.target.value)}
+          onChange={e => setCode(e.target.value.toUpperCase())}
           onKeyDown={handleKeyDown}
         />
         <button
